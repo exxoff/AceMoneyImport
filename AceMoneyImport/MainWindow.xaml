@@ -1,0 +1,16 @@
+﻿<Window x:Class="AceMoneyImport.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AceMoneyImport"
+        mc:Ignorable="d"
+        Title="AceMoney Import" Height="110" Width="400">
+    <Grid>
+        <WrapPanel>
+            <TextBox Width="250" Height="20" Margin="10" Drop="FileBox_Drop" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Text="{Binding InputFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
+            <Button Width="auto" Height="20" Content="Skapa CSV" Click="Button_Click" />
+            <TextBox Width="250" Height="20" Margin="10" Text="{Binding OutFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
+        </WrapPanel>
+    </Grid>
+</Window>

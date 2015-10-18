@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelData", "ExcelData\ExcelData.csproj", "{D7D9438F-3CA0-4F80-A3EB-68B3E92E71A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_ExcelData", "Test_ExcelData\Test_ExcelData.csproj", "{903EC6D5-C420-4AEA-A455-3BF7B7DFBC9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AceMoneyImport", "AceMoneyImport\AceMoneyImport.csproj", "{3E787A0B-DA39-40E1-A9BE-259FA4C7F659}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7D9438F-3CA0-4F80-A3EB-68B3E92E71A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D9438F-3CA0-4F80-A3EB-68B3E92E71A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D9438F-3CA0-4F80-A3EB-68B3E92E71A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D9438F-3CA0-4F80-A3EB-68B3E92E71A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903EC6D5-C420-4AEA-A455-3BF7B7DFBC9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903EC6D5-C420-4AEA-A455-3BF7B7DFBC9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903EC6D5-C420-4AEA-A455-3BF7B7DFBC9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903EC6D5-C420-4AEA-A455-3BF7B7DFBC9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E787A0B-DA39-40E1-A9BE-259FA4C7F659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E787A0B-DA39-40E1-A9BE-259FA4C7F659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E787A0B-DA39-40E1-A9BE-259FA4C7F659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E787A0B-DA39-40E1-A9BE-259FA4C7F659}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

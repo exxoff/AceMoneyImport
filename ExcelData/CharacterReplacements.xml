@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<replacements>
+	<replace oldchar="$" newchar="Å"/>
+	<replace oldchar="#" newchar="Ä"/>
+	<replace oldchar="@" newchar="Ö"/>
+  <replace oldchar="{" newchar="Ä"/>
+  <replace oldchar="¦" newchar="Ö"/>
+	
+</replacements>
