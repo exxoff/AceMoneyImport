@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ExcelData;
+using System.Data;
 
 namespace AceMoneyImport
 {
@@ -57,7 +59,23 @@ namespace AceMoneyImport
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            using (new WaitCursor())
+            { 
+                if (Item != null)
+                {
+                    try
+                    {
+                        DataTable _dataFromExcel = ExcelHelper.GetData(Item.InputFile);
+                        _dataFromExcel.WriteToCsvFile(Item.OutFile);
 
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
     }
 }

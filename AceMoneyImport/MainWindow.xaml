@@ -5,12 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AceMoneyImport"
         mc:Ignorable="d"
-        Title="AceMoney Import" Height="110" Width="400">
+        Title="AceMoney Import" Height="110" Width="400"
+        SizeToContent="WidthAndHeight">
     <Grid>
-        <WrapPanel>
-            <TextBox Width="250" Height="20" Margin="10" Drop="FileBox_Drop" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Text="{Binding InputFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
-            <Button Width="auto" Height="20" Content="Skapa CSV" Click="Button_Click" />
-            <TextBox Width="250" Height="20" Margin="10" Text="{Binding OutFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
-        </WrapPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <GroupBox Header="Input File" DockPanel.Dock="Top" Margin="5">
+                <TextBox Width="250" Height="20" Margin="1" Drop="FileBox_Drop" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Text="{Binding InputFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
+            </GroupBox>
+            
+            <GroupBox Header="Output File" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="250" Height="20" Margin="1" Text="{Binding OutFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
+                    
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        <DockPanel Grid.Column="1">
+            <Button DockPanel.Dock="Right" Width="auto" Margin="5" Height="20" Content="Create CSV" Click="Button_Click" />
+        </DockPanel>
     </Grid>
 </Window>

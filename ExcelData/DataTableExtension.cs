@@ -9,7 +9,7 @@ namespace ExcelData
 {
     public static class DataTableExtensions
     {
-        public static void WriteToCsvFile(this DataTable dataTable, string filePath)
+        public static void WriteToCsvFile(this DataTable dataTable, string OuputFilePath)
         {
             StringBuilder fileContent = new StringBuilder();
 
@@ -33,7 +33,7 @@ namespace ExcelData
                 fileContent.Replace(";", System.Environment.NewLine, fileContent.Length - 1, 1);
             }
 
-            System.IO.File.WriteAllText(filePath, fileContent.ToString(),Encoding.Unicode);
+            System.IO.File.WriteAllText(OuputFilePath, fileContent.ToString(),Encoding.Unicode);
 
         }
     }

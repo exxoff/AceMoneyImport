@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Excel;
 using System.IO;
 using System.Data;
-using CSharpJExcel;
 using NPOI;
 using NPOI.SS.UserModel;
 
@@ -16,7 +14,7 @@ namespace ExcelData
     {
 
 
-        public static DataTable GetData(string FileName)
+        public static DataTable GetData(string InputFilePath)
         {
             DataTable _excelTable = new DataTable();
 
@@ -33,7 +31,7 @@ namespace ExcelData
 
 
             IWorkbook book;
-            using (var stream = File.Open(FileName, FileMode.Open, FileAccess.Read))
+            using (var stream = File.Open(InputFilePath, FileMode.Open, FileAccess.Read))
             {
                 book = WorkbookFactory.Create(stream);
             }
