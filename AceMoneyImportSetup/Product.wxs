@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="AceMoney Import" Language="1033" Version="1.0.0.0" Manufacturer="Per Rosen" UpgradeCode="aa66f9bb-0520-46ff-a8e1-40ce950af620">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<!--<MediaTemplate />-->
+
+    <!-- Add Cab1.cab file inside the package-->
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"/>
+    
+    <!-- Here we install our main application -->
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+        <Directory Id="ProgramFilesFolder" >
+          <Directory Id="INSTALLFOLDER" Name ="AceMoney Import"/>
+        </Directory>
+    
+    
+      <!-- Create folder in Programs menu -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id ="ApplicationsProgramsFolder" Name ="AceMoney Import" />
+      </Directory>
+    </Directory>
+    <!-- Create shortcut to application -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="64558D12-F904-4501-A12D-3E012712BF8F" >
+        <Shortcut Id="ApplicationStartMenu" Name ="AceMoney Import" Description="AceMoney Import Utility"
+                  Target="[INSTALLFOLDER]AceMoneyImport.exe" WorkingDirectory="INSTALLFOLDER">
+          <Icon Id="AppIcon" SourceFile="$(var.AceMoneyImport.ProjectDir)\AceMoneyImport.ico"/>
+        </Shortcut>
+        <!--Remove at Uninstall-->
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]"
+                  Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+    
+    <!-- Add component -->
+
+    <Feature Id ="MainApplication" Title="Main Application" Level="1">
+      <ComponentRef Id="acemoneyimport.exe"/>
+      <ComponentRef Id ="ApplicationShortcut"/>
+    </Feature>
+    
+		<Feature Id="ProductFeature" Title="AceMoneyImportSetup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+
+
+
+</Wix>
