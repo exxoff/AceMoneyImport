@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:AceMoneyImport"
         mc:Ignorable="d"
         Title="AceMoney Import" Height="110" Width="400"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        Icon="AceMoneyImport.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
