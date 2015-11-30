@@ -14,9 +14,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExcelData;
 using System.Data;
+using AceMoneyImport.Commands;
+using System.IO;
 
 namespace AceMoneyImport
 {
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -24,6 +28,8 @@ namespace AceMoneyImport
     {
 
         ImportItem Item;
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,13 +37,16 @@ namespace AceMoneyImport
             ImportItem _item = new ImportItem();
 
             Item = _item;
+            this.DataContext = Item;
             
             Item.PropertyChanged += Item_PropertyChanged;
         }
 
+
+
         private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            this.DataContext = Item;
+            //this.DataContext = Item;
         }
 
         private void FileBox_Drop(object sender, DragEventArgs e)
@@ -76,6 +85,64 @@ namespace AceMoneyImport
                     }
                 }
             }
+        }
+
+        private void CreateCsvExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            using (new WaitCursor())
+            {
+                if (Item != null)
+                {
+                    try
+                    {
+                        DataTable _dataFromExcel = ExcelHelper.GetData(Item.InputFile);
+                        _dataFromExcel.WriteToCsvFile(Item.OutFile);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void CreateCsvCanExecute(object sender,CanExecuteRoutedEventArgs e)
+        {
+
+
+            e.CanExecute = (isValidPath(txtInput.Text) && isValidPath(txtOutput.Text));
+
+
+             
+        }
+
+        private bool isValidPath(string FilePath)
+        {
+
+            try
+            {
+                FileInfo _file = new FileInfo(FilePath);
+
+                if (Directory.Exists(_file.Directory.ToString()))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+            
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

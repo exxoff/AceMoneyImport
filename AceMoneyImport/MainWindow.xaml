@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AceMoneyImport"
+        xmlns:commands="clr-namespace:AceMoneyImport.Commands"
         mc:Ignorable="d"
         Title="AceMoney Import" Height="110" Width="400"
         SizeToContent="WidthAndHeight">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static commands:CustomCommands.CreateCsv}" Executed="CreateCsvExecuted" CanExecute="CreateCsvCanExecute"/>
+    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -14,18 +18,18 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <GroupBox Header="Input File" DockPanel.Dock="Top" Margin="5">
-                <TextBox Width="250" Height="20" Margin="1" Drop="FileBox_Drop" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Text="{Binding InputFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
+                <TextBox x:Name="txtInput"  Width="250" Height="20" Margin="1" Drop="FileBox_Drop" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}" />
             </GroupBox>
             
             <GroupBox Header="Output File" Margin="5">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Width="250" Height="20" Margin="1" Text="{Binding OutFile,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"/>
+                    <TextBox x:Name="txtOutput" Width="250" Height="20" Margin="1" Text="{Binding OutFile}"/>
                     
                 </StackPanel>
             </GroupBox>
         </StackPanel>
         <DockPanel Grid.Column="1">
-            <Button DockPanel.Dock="Right" Width="auto" Margin="5" Height="20" Content="Create CSV" Click="Button_Click" />
+            <Button DockPanel.Dock="Right" Width="auto" Margin="5" Height="20" Content="Create CSV" Command="{x:Static commands:CustomCommands.CreateCsv}" />
         </DockPanel>
     </Grid>
 </Window>
