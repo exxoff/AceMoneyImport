@@ -7,15 +7,11 @@
         xmlns:commands="clr-namespace:AceMoneyImport.Commands"
         mc:Ignorable="d"
         Title="AceMoney Import" Height="110" Width="400"
-<<<<<<< HEAD
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        Icon="AceMoneyImport.ico">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static commands:CustomCommands.CreateCsv}" Executed="CreateCsvExecuted" CanExecute="CreateCsvCanExecute"/>
     </Window.CommandBindings>
-=======
-        SizeToContent="WidthAndHeight"
-        Icon="AceMoneyImport.ico">
->>>>>>> 6f20232fa060ca12eea8d9b1dd487ae9af7ba3ba
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
