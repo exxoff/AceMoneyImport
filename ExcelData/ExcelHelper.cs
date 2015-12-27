@@ -10,7 +10,7 @@ using NPOI.SS.UserModel;
 
 namespace ExcelData
 {
-    public class ExcelHelper
+    public static class ExcelHelper
     {
 
 
@@ -41,11 +41,17 @@ namespace ExcelData
             for(int i=0;i< sheet.LastRowNum;i++)
             {
                 try
-                { 
+                {
 
-                    DateTime _cellDate = sheet.GetRow(i).GetCell(0).DateCellValue;
+                    DateTime _cellDate = DateTime.Now;
+                    if(sheet.GetRow(i).GetCell(0).CellType == CellType.Numeric)
+                    {
+                        _cellDate = sheet.GetRow(i).GetCell(0).DateCellValue;
+                    
+                    
                     string _spec = sheet.GetRow(i).GetCell(2).StringCellValue;
-                    string _amount = sheet.GetRow(i).GetCell(6).NumericCellValue.ToString();
+                    //string _amount = sheet.GetRow(i).GetCell(6).StringCellValue.ToString();
+                    string _amount = sheet.GetRow(i).GetCell(6).GetValue();
                     string _deposit = null;
                     _spec = _spec.FormatText();
 
@@ -65,6 +71,7 @@ namespace ExcelData
                         _deposit,
                         null,
                         null);
+                    }
                 }
                 catch (InvalidDataException)
                 {
@@ -81,6 +88,30 @@ namespace ExcelData
 
             
             return _excelTable;
+            
+        }
+
+        static string GetValue(this ICell CurrentCell)
+        {
+            string _retVal = null;
+
+            switch(CurrentCell.CellType)
+            {
+                case CellType.Numeric:
+                    {
+                        _retVal = CurrentCell.NumericCellValue.ToString();
+
+                        break;
+                    }
+                case CellType.String:
+                    {
+                        _retVal = CurrentCell.StringCellValue;
+                        break;
+                    }
+                    
+            }
+
+            return _retVal;
             
         }
     }

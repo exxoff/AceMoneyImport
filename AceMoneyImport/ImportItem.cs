@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,16 @@ namespace AceMoneyImport
                 if(value != null)
                 {
                     _inputFile = value;
+
+                    if(OutFile==null)
+                    {
+                        
+                        string _fileName = Path.GetFileNameWithoutExtension(_inputFile);
+                        OutFile = string.Format("{0}\\{1}.csv",Path.GetDirectoryName(_inputFile).ToString(),_fileName);
+                    }
+
+                    
+
                     RaisePropertyChanged("InputFile");
                 }
             }

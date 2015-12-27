@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AceMoneyImport"
         xmlns:commands="clr-namespace:AceMoneyImport.Commands"
         mc:Ignorable="d"
-        Title="AceMoney Import" Height="110" Width="400"
+        Title="AceMoney Import"
         SizeToContent="WidthAndHeight"
         Icon="AceMoneyImport.ico">
     <Window.CommandBindings>
