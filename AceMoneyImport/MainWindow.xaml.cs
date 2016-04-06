@@ -37,7 +37,7 @@ namespace AceMoneyImport
         {
             var _version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
-            return string.Format("{0}.{1}.{2}", _version.Major, _version.Minor, _version.Revision);
+            return string.Format("{0}.{1}.{2}", _version.Major, _version.Minor, _version.Build);
 
 
         }
