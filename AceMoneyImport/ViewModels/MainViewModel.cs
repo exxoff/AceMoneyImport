@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AceMoneyImport.Commands;
+using ExcelData;
+using System;
 using System.ComponentModel;
+using System.Data;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace AceMoneyImport.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public string Version { get; set; }
+        public string WindowTitle { get; set; }
 
         private string inputFile;
 
@@ -43,9 +41,40 @@ namespace AceMoneyImport.ViewModels
         public string OutFile
         {
             get { return outFile; }
-            set { outFile = value; OnPropertyChanged(); }
+            set
+            {
+                outFile = value;
+                OnPropertyChanged();
+                
+            }
         }
 
+        public RelayCommand DoConvert { get; set; }
+        public MainViewModel()
+        {
+            WindowTitle = string.Format("AceMoney Import v.{0}", GetVersion());
+            DoConvert = new RelayCommand(ConvertToCsv,CreateCsvCanExecute);
+        }
+
+        public async void ConvertToCsv()
+        {
+            using (new WaitCursor())
+            {
+
+                try
+                {
+                    DataTable _dataFromExcel = ExcelHelper.GetData(InputFile);
+                    await Task.Run(() => _dataFromExcel.WriteToCsvFile(OutFile));
+
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            
+        }
 
         public string GetVersion()
         {
@@ -74,11 +103,11 @@ namespace AceMoneyImport.ViewModels
         //    e.Handled = true;
         //}
 
-        public void CreateCsvCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        public bool CreateCsvCanExecute()
         {
 
 
-            e.CanExecute = (isValidPath(InputFile) && isValidPath(OutFile));
+            return (isValidPath(InputFile) && isValidPath(OutFile));
 
 
 

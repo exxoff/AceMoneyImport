@@ -60,7 +60,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="CustomCommands.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="WaitCursor.cs" />
     <Page Include="MainWindow.xaml">

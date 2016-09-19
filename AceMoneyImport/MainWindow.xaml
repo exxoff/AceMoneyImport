@@ -7,12 +7,9 @@
         xmlns:commands="clr-namespace:AceMoneyImport.Commands"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="Jojo"
+        Title="{Binding WindowTitle}"
         SizeToContent="WidthAndHeight"
         Icon="AceMoneyImport.ico">
-    <Window.CommandBindings>
-        <CommandBinding Command="{x:Static commands:CustomCommands.CreateCsv}" Executed="CreateCsvExecuted" CanExecute="CreateCsvCanExecute"/>
-    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -22,14 +19,14 @@
             <GroupBox Header="Input File" DockPanel.Dock="Top" Margin="5">
                 <TextBox x:Name="txtInput"  Width="250" Height="20" Margin="1" Drop="FileBox_Drop" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}">
                     <!--<TextBox x:Name="txtInput"  Width="250" Height="20" Margin="1" AllowDrop="True" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}">-->
-                    <i:Interaction.Triggers>
+                    <!--<i:Interaction.Triggers>
                         <i:EventTrigger EventName="Drop">
                             <i:InvokeCommandAction Command="{Binding FileBox_Drop}"/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="PreviewDragOver">
                             <i:InvokeCommandAction Command="{Binding FileBox_PreviewDragover}"/>
                         </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    </i:Interaction.Triggers>-->
                 </TextBox>
             </GroupBox>
             
@@ -41,7 +38,8 @@
             </GroupBox>
         </StackPanel>
         <DockPanel Grid.Column="1">
-            <Button DockPanel.Dock="Right" Width="auto" Margin="5" Height="20" Content="Create CSV" Command="{x:Static commands:CustomCommands.CreateCsv}" />
+            
+            <Button DockPanel.Dock="Right" Width="auto" Margin="5" Height="20" Content="Create CSV" Command="{Binding DoConvert}" />
         </DockPanel>
     </Grid>
 </Window>
