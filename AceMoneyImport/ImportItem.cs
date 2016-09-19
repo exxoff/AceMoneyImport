@@ -8,61 +8,57 @@ using System.Threading.Tasks;
 
 namespace AceMoneyImport
 {
-    class ImportItem:INotifyPropertyChanged
+    public class ImportItem
     {
-        private string _inputFile;
-        private string _outFile;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public string InputFile { get; set; }
+        public string OutFile { get; set; }
 
-        public string OutFile
-        {
-            get { return _outFile; }
-            set
-            {
-                if(value != null)
-                {
-                    _outFile = value;
-                    RaisePropertyChanged("OutFile");
-                }
-
-            }
-        }
-
-        public string InputFile
-        {
-            get { return _inputFile; }
-            set
-            {
-                if(value != null)
-                {
-                    _inputFile = value;
-
-                    if(OutFile==null)
-                    {
-                        
-                        string _fileName = Path.GetFileNameWithoutExtension(_inputFile);
-                        OutFile = string.Format("{0}\\{1}.csv",Path.GetDirectoryName(_inputFile).ToString(),_fileName);
-                    }
-
-                    
-
-                    RaisePropertyChanged("InputFile");
-                }
-            }
-                
-        }
+        //private string _inputFile;
+        //private string _outFile;
 
 
 
-        private void RaisePropertyChanged(string PropertyName)
-        {
-            if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
-                }
+        //public string OutFile
+        //{
+        //    get { return _outFile; }
+        //    set
+        //    {
+        //        if(value != null)
+        //        {
+        //            _outFile = value;
 
-        }
+        //        }
+
+        //    }
+        //}
+
+        //public string InputFile
+        //{
+        //    get { return _inputFile; }
+        //    set
+        //    {
+        //        if(value != null)
+        //        {
+        //            _inputFile = value;
+
+        //            if(OutFile==null)
+        //            {
+
+        //                string _fileName = Path.GetFileNameWithoutExtension(_inputFile);
+        //                OutFile = string.Format("{0}\\{1}.csv",Path.GetDirectoryName(_inputFile).ToString(),_fileName);
+        //            }
+
+
+
+
+        //        }
+        //    }
+
+        //}
+
+
+
 
 
     }

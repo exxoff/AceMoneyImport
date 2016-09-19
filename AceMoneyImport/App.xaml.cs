@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AceMoneyImport.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,18 @@ namespace AceMoneyImport
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            ComposeObjects();
+            Application.Current.MainWindow.Show();
+
+        }
+
+        private void ComposeObjects()
+        {
+            MainViewModel model = new MainViewModel();
+            MainWindow = new MainWindow(model);
+        }
     }
 }

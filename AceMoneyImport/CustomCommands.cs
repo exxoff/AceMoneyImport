@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AceMoneyImport.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace AceMoneyImport.Commands
     public static class CustomCommands
     {
 
-        public static RoutedUICommand CreateCsv = new RoutedUICommand("CreateCsv", "CreateCsv", typeof(CustomCommands));
+        public static RoutedUICommand CreateCsv = new RoutedUICommand("CreateCsv", "CreateCsv", typeof(MainViewModel));
     }
 }

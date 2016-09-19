@@ -1,4 +1,5 @@
-﻿using ExcelData;
+﻿using AceMoneyImport.ViewModels;
+using ExcelData;
 using System;
 using System.Data;
 using System.IO;
@@ -16,46 +17,51 @@ namespace AceMoneyImport
     public partial class MainWindow : Window
     {
 
-        ImportItem Item;
+        //ImportItem Item;
+        MainViewModel viewModel;
         
 
-        public MainWindow()
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
 
-            ImportItem _item = new ImportItem();
+            //TODO: Fixa detta via DI istället
+            //viewModel = new MainViewModel();
+            this.viewModel = viewModel;
 
-            Item = _item;
-            this.DataContext = Item;
+            //ImportItem _item = new ImportItem();
+
+            //Item = _item;
+            this.DataContext = viewModel;
             
-            Item.PropertyChanged += Item_PropertyChanged;
+            //Item.PropertyChanged += Item_PropertyChanged;
 
-            this.Title = string.Format("AceMoney Import v.{0}", GetVersion());
+            this.Title = string.Format("AceMoney Import v.{0}", viewModel.GetVersion());
         }
 
-        private string GetVersion()
-        {
-            var _version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        //private string GetVersion()
+        //{
+        //    var _version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
-            return string.Format("{0}.{1}.{2}", _version.Major, _version.Minor, _version.Build);
+        //    return string.Format("{0}.{1}.{2}", _version.Major, _version.Minor, _version.Build);
 
 
-        }
+        //}
 
-        private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            //this.DataContext = Item;
-        }
+        //private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    //this.DataContext = Item;
+        //}
 
         private void FileBox_Drop(object sender, DragEventArgs e)
         {
             TextBox _box = sender as TextBox;
 
-            if(e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] _files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                Item.InputFile = _files[0].ToString();
+                viewModel.InputFile = _files[0].ToString();
             }
         }
 
@@ -64,37 +70,37 @@ namespace AceMoneyImport
             e.Handled = true;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            using (new WaitCursor())
-            { 
-                if (Item != null)
-                {
-                    try
-                    {
-                        DataTable _dataFromExcel = ExcelHelper.GetData(Item.InputFile);
-                        _dataFromExcel.WriteToCsvFile(Item.OutFile);
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    using (new WaitCursor())
+        //    { 
+        //        if (viewModel != null)
+        //        {
+        //            try
+        //            {
+        //                DataTable _dataFromExcel = ExcelHelper.GetData(viewModel.InputFile);
+        //                _dataFromExcel.WriteToCsvFile(viewModel.OutFile);
 
-                    }
-                    catch (Exception ex)
-                    {
+        //            }
+        //            catch (Exception ex)
+        //            {
 
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-            }
-        }
+        //                MessageBox.Show(ex.Message);
+        //            }
+        //        }
+        //    }
+        //}
 
         private void CreateCsvExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             using (new WaitCursor())
             {
-                if (Item != null)
+                if (viewModel != null)
                 {
                     try
                     {
-                        DataTable _dataFromExcel = ExcelHelper.GetData(Item.InputFile);
-                        _dataFromExcel.WriteToCsvFile(Item.OutFile);
+                        DataTable _dataFromExcel = ExcelHelper.GetData(viewModel.InputFile);
+                        _dataFromExcel.WriteToCsvFile(viewModel.OutFile);
 
                     }
                     catch (Exception ex)
@@ -106,14 +112,14 @@ namespace AceMoneyImport
             }
         }
 
-        private void CreateCsvCanExecute(object sender,CanExecuteRoutedEventArgs e)
+        private void CreateCsvCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
 
 
             e.CanExecute = (isValidPath(txtInput.Text) && isValidPath(txtOutput.Text));
 
 
-             
+
         }
 
         private bool isValidPath(string FilePath)
@@ -135,12 +141,9 @@ namespace AceMoneyImport
                 return false;
             }
 
-            
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
         }
+
+
     }
 }
