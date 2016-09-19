@@ -25,33 +25,11 @@ namespace AceMoneyImport
         {
             InitializeComponent();
 
-            //TODO: Fixa detta via DI istället
-            //viewModel = new MainViewModel();
             this.viewModel = viewModel;
-
-            //ImportItem _item = new ImportItem();
-
-            //Item = _item;
             this.DataContext = viewModel;
             
-            //Item.PropertyChanged += Item_PropertyChanged;
-
             this.Title = string.Format("AceMoney Import v.{0}", viewModel.GetVersion());
         }
-
-        //private string GetVersion()
-        //{
-        //    var _version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-
-        //    return string.Format("{0}.{1}.{2}", _version.Major, _version.Minor, _version.Build);
-
-
-        //}
-
-        //private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        //{
-        //    //this.DataContext = Item;
-        //}
 
         private void FileBox_Drop(object sender, DragEventArgs e)
         {
@@ -69,27 +47,6 @@ namespace AceMoneyImport
         {
             e.Handled = true;
         }
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    using (new WaitCursor())
-        //    { 
-        //        if (viewModel != null)
-        //        {
-        //            try
-        //            {
-        //                DataTable _dataFromExcel = ExcelHelper.GetData(viewModel.InputFile);
-        //                _dataFromExcel.WriteToCsvFile(viewModel.OutFile);
-
-        //            }
-        //            catch (Exception ex)
-        //            {
-
-        //                MessageBox.Show(ex.Message);
-        //            }
-        //        }
-        //    }
-        //}
 
         private void CreateCsvExecuted(object sender, ExecutedRoutedEventArgs e)
         {

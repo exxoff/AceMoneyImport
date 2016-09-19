@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="WaitCursor.cs" />
@@ -112,6 +113,7 @@
   <ItemGroup>
     <Resource Include="AceMoneyImport.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
