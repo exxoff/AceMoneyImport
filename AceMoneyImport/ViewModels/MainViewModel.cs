@@ -1,4 +1,7 @@
 ﻿using AceMoneyImport.Commands;
+using AceMoneyImport.Helpers;
+using AceMoneyImport.Interfaces;
+using AceMoneyImport.Models;
 using ExcelData;
 using System;
 using System.ComponentModel;
@@ -30,7 +33,9 @@ namespace AceMoneyImport.ViewModels
 
                         string _fileName = Path.GetFileNameWithoutExtension(inputFile);
                         OutFile = string.Format("{0}\\{1}.csv", Path.GetDirectoryName(inputFile).ToString(), _fileName);
+                        
                     }
+                    item.InputFile = inputFile;
                     OnPropertyChanged();
                     
                 }
@@ -44,16 +49,23 @@ namespace AceMoneyImport.ViewModels
             set
             {
                 outFile = value;
+                item.OutputFile = outFile;
                 OnPropertyChanged();
                 
             }
         }
 
+        private IImportItem item;
         public RelayCommand DoConvert { get; set; }
-        public MainViewModel()
+        public MainViewModel(IImportItem item)
         {
+            this.item = item;
             WindowTitle = string.Format("AceMoney Import v.{0}", GetVersion());
             DoConvert = new RelayCommand(ConvertToCsv,CreateCsvCanExecute);
+
+            InputFile = item.InputFile;
+            OutFile = item.OutputFile;
+
         }
 
         public async void ConvertToCsv()
@@ -61,17 +73,13 @@ namespace AceMoneyImport.ViewModels
             using (new WaitCursor())
             {
 
-                try
-                {
-                    DataTable _dataFromExcel = ExcelHelper.GetData(InputFile);
-                    await Task.Run(() => _dataFromExcel.WriteToCsvFile(OutFile));
 
-                }
-                catch (Exception ex)
+                ReturnObject ret = await Task<ReturnObject>.Run(() => this.item.ConvertToCsv());
+                if (ret.ErrorNumber != 0)
                 {
-
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ret.ErrorMessage);
                 }
+                
             }
             
         }
@@ -85,32 +93,9 @@ namespace AceMoneyImport.ViewModels
         }
 
 
-        // Dessa metoder "kan" inte implementeras än p.g.a. att det är svårt att skicka med EventArgs utan t.ex. MVVM Light
-        //public void FileBox_Drop(object sender, DragEventArgs e)
-        //{
-        //    TextBox _box = sender as TextBox;
-
-        //    if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        //    {
-        //        string[] _files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-        //        InputFile = _files[0].ToString();
-        //    }
-        //}
-
-        //public void FileBox_PreviewDragOver(object sender, DragEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
         public bool CreateCsvCanExecute()
         {
-
-
             return (isValidPath(InputFile) && isValidPath(OutFile));
-
-
-
         }
 
         private bool isValidPath(string FilePath)

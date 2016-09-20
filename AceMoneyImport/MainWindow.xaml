@@ -1,10 +1,11 @@
-﻿<Window x:Class="AceMoneyImport.MainWindow"
+﻿<metro:MetroWindow x:Class="AceMoneyImport.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AceMoneyImport"
         xmlns:commands="clr-namespace:AceMoneyImport.Commands"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}"
@@ -15,11 +16,19 @@
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <GroupBox Header="Input File" DockPanel.Dock="Top" Margin="5">
-                <TextBox x:Name="txtInput"  Width="250" Height="20" Margin="1" Drop="FileBox_Drop" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}">
-                    <!--<TextBox x:Name="txtInput"  Width="250" Height="20" Margin="1" AllowDrop="True" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}">-->
-                    <!--<i:Interaction.Triggers>
+        <StackPanel Grid.Column="0" Margin="8">
+            <!--<GroupBox Header="Input File" DockPanel.Dock="Top" Margin="5">-->
+            <TextBox Width="250" 
+                         Height="20" 
+                         Margin="1" 
+                         Drop="FileBox_Drop" 
+                         AllowDrop="True" 
+                         PreviewDragOver="TextBox_PreviewDragOver" 
+                         Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}" 
+                        metro:TextBoxHelper.Watermark="Input file" 
+                        metro:TextBoxHelper.UseFloatingWatermark="False" />
+            <!--<TextBox x:Name="txtInput"  Width="250" Height="20" Margin="1" AllowDrop="True" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}">-->
+            <!--<i:Interaction.Triggers>
                         <i:EventTrigger EventName="Drop">
                             <i:InvokeCommandAction Command="{Binding FileBox_Drop}"/>
                         </i:EventTrigger>
@@ -27,19 +36,24 @@
                             <i:InvokeCommandAction Command="{Binding FileBox_PreviewDragover}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
-                </TextBox>
-            </GroupBox>
+
+            <!--</GroupBox>-->
             
-            <GroupBox Header="Output File" Margin="5">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="txtOutput" Width="250" Height="20" Margin="1" Text="{Binding OutFile}"/>
+            <!--<GroupBox Header="Output File" Margin="5">-->
+                <!--<StackPanel Orientation="Horizontal">-->
+                    <TextBox Margin="1,5" 
+                             Width="250" 
+                             Height="20" 
+                             Text="{Binding OutFile}"
+                            metro:TextBoxHelper.Watermark="Output file" 
+                            metro:TextBoxHelper.UseFloatingWatermark="False" />
                     
-                </StackPanel>
-            </GroupBox>
+                <!--</StackPanel>-->
+            <!--</GroupBox>-->
         </StackPanel>
         <DockPanel Grid.Column="1">
             
             <Button DockPanel.Dock="Right" Width="auto" Margin="5" Height="20" Content="Create CSV" Command="{Binding DoConvert}" />
         </DockPanel>
     </Grid>
-</Window>
+</metro:MetroWindow>

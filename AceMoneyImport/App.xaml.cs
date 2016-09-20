@@ -1,4 +1,5 @@
-﻿using AceMoneyImport.ViewModels;
+﻿using AceMoneyImport.Models;
+using AceMoneyImport.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,8 +25,9 @@ namespace AceMoneyImport
 
         private void ComposeObjects()
         {
-            MainViewModel model = new MainViewModel();
-            MainWindow = new MainWindow(model);
+            ImportItem item = new ImportItem();
+            MainViewModel viewModel = new MainViewModel(new ImportItem());
+            MainWindow = new MainWindow(viewModel);
         }
     }
 }

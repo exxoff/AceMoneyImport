@@ -8,10 +8,10 @@ using System.Xml;
 
 namespace ExcelData
 {
-    static class StringExtensions
+    public static class StringExtensions
     {
 
-        internal static string FormatText(this string InputText)
+        public static string FormatText(this string InputText)
         {
             string _output = InputText.DoSubstitution();
 

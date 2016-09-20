@@ -23,13 +23,28 @@ namespace Test_ExcelData
 
             DataTable _data = ExcelHelper.GetData(fileName);
             
-            _data.WriteToCsvFile(_outFile);
+            _data.WriteToCsvFileAsync(_outFile);
 
             //Assert
 
             Assert.IsTrue(File.Exists(_outFile));
             //File.Delete(_outFile);
 
+        }
+
+        [TestMethod]
+        public void StringExtensionFormatTextReturnsString()
+        {
+            //Arrange
+            string input = "$";
+
+            //Act
+
+
+
+            //Assert
+
+            Assert.AreEqual("Å", ExcelData.StringExtensions.FormatText(input));
         }
     }
 }

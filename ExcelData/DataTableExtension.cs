@@ -1,11 +1,12 @@
 ﻿using System.Data;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExcelData
 {
     public static class DataTableExtensions
     {
-        public static void WriteToCsvFile(this DataTable dataTable, string OuputFilePath)
+        public static async void WriteToCsvFileAsync(this DataTable dataTable, string OuputFilePath)
         {
             StringBuilder fileContent = new StringBuilder();
 
@@ -29,7 +30,7 @@ namespace ExcelData
                 fileContent.Replace(";", System.Environment.NewLine, fileContent.Length - 1, 1);
             }
 
-            System.IO.File.WriteAllText(OuputFilePath, fileContent.ToString(),Encoding.Unicode);
+            await Task.Run(() => System.IO.File.WriteAllText(OuputFilePath, fileContent.ToString(),Encoding.Unicode));
 
         }
     }
