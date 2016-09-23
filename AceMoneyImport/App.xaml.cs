@@ -1,5 +1,8 @@
-﻿using AceMoneyImport.Models;
+﻿using AceMoneyImport.Interfaces;
+using AceMoneyImport.Models;
 using AceMoneyImport.ViewModels;
+using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -25,8 +28,10 @@ namespace AceMoneyImport
 
         private void ComposeObjects()
         {
-            ImportItem item = new ImportItem();
-            MainViewModel viewModel = new MainViewModel(new ImportItem());
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            SimpleIoc.Default.Register<IImportItem, ImportItem>();
+                       
+            MainViewModel viewModel = new MainViewModel(ServiceLocator.Current.GetInstance<IImportItem>());
             MainWindow = new MainWindow(viewModel);
         }
     }

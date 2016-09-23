@@ -3,6 +3,7 @@ using AceMoneyImport.Helpers;
 using AceMoneyImport.Interfaces;
 using AceMoneyImport.Models;
 using ExcelData;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -37,6 +38,7 @@ namespace AceMoneyImport.ViewModels
                     }
                     item.InputFile = inputFile;
                     OnPropertyChanged();
+                    DoConvert.RaiseCanExecuteChanged();
                     
                 }
             }
@@ -51,7 +53,8 @@ namespace AceMoneyImport.ViewModels
                 outFile = value;
                 item.OutputFile = outFile;
                 OnPropertyChanged();
-                
+                DoConvert.RaiseCanExecuteChanged();
+
             }
         }
 
@@ -61,7 +64,7 @@ namespace AceMoneyImport.ViewModels
         {
             this.item = item;
             WindowTitle = string.Format("AceMoney Import v.{0}", GetVersion());
-            DoConvert = new RelayCommand(ConvertToCsv,CreateCsvCanExecute);
+            DoConvert = new RelayCommand(() => ConvertToCsv(),() => CreateCsvCanExecute());
 
             InputFile = item.InputFile;
             OutFile = item.OutputFile;
@@ -95,6 +98,7 @@ namespace AceMoneyImport.ViewModels
 
         public bool CreateCsvCanExecute()
         {
+
             return (isValidPath(InputFile) && isValidPath(OutFile));
         }
 
@@ -119,6 +123,32 @@ namespace AceMoneyImport.ViewModels
 
 
         }
+
+        private RelayCommand<DragEventArgs> dropCommand;
+
+        public RelayCommand<DragEventArgs> DropCommand
+        {
+            get { return dropCommand; }
+            set { dropCommand = value; }
+        }
+
+        private void FileBox_Drop(object sender, DragEventArgs e)
+        {
+            //TextBox _box = sender as TextBox;
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] _files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                InputFile = _files[0].ToString();
+            }
+        }
+
+        private void FileBox_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+        }
+
 
         #region PropertyChanged members
         public event PropertyChangedEventHandler PropertyChanged;
