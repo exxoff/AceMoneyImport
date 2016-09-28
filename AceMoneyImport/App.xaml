@@ -16,7 +16,7 @@
           
         </ResourceDictionary>
                 <ResourceDictionary>
-                    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:AceMoneyImport.ViewModel" />
+                    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:AceMoneyImport.ViewModels" />
                 </ResourceDictionary>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

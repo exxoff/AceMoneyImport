@@ -38,7 +38,7 @@ namespace ExcelData
             Dictionary<string, string> _SubstitutionRules = new Dictionary<string, string>();
 
             XmlDocument _doc = new XmlDocument();
-            _doc.Load("CharacterReplacements.xml");
+            _doc.Load(AppDomain.CurrentDomain.BaseDirectory + "\\CharacterReplacements.xml");
 
 
 

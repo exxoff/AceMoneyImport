@@ -1,16 +1,20 @@
-﻿using System.Data;
+﻿using ExcelData.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
-namespace ExcelData
+namespace ExcelData.Helpers
 {
-    public static class DataTableExtensions
+    public class CsvFileWriter : ICsvFileWriter
     {
-        public static async void WriteToCsvFileAsync(this DataTable dataTable, string OuputFilePath)
+        public async void WriteAsync(DataTable data, string outputFile)
         {
             StringBuilder fileContent = new StringBuilder();
 
-            foreach (var col in dataTable.Columns)
+            foreach (var col in data.Columns)
             {
                 fileContent.Append("\"" + col.ToString() + "\";");
             }
@@ -19,7 +23,7 @@ namespace ExcelData
 
 
 
-            foreach (DataRow dr in dataTable.Rows)
+            foreach (DataRow dr in data.Rows)
             {
 
                 foreach (var column in dr.ItemArray)
@@ -30,9 +34,8 @@ namespace ExcelData
                 fileContent.Replace(";", System.Environment.NewLine, fileContent.Length - 1, 1);
             }
 
-            await Task.Run(() => System.IO.File.WriteAllText(OuputFilePath, fileContent.ToString(),Encoding.Unicode));
+            await Task.Run(() => System.IO.File.WriteAllText(outputFile, fileContent.ToString(), Encoding.Unicode));
 
         }
     }
 }
-

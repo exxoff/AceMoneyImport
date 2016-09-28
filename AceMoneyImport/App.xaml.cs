@@ -1,14 +1,11 @@
-﻿using AceMoneyImport.Interfaces;
-using AceMoneyImport.Models;
+﻿
 using AceMoneyImport.ViewModels;
+using ExcelData.Helpers;
+using ExcelData.Interfaces;
+using ExcelData.Models;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 
 namespace AceMoneyImport
@@ -30,6 +27,8 @@ namespace AceMoneyImport
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<IImportItem, ImportItem>();
+            SimpleIoc.Default.Register<ICsvFileWriter, CsvFileWriter>();
+            
                        
             MainViewModel viewModel = new MainViewModel(ServiceLocator.Current.GetInstance<IImportItem>());
             MainWindow = new MainWindow(viewModel);

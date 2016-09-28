@@ -11,33 +11,33 @@ namespace Test_ExcelData
     {
   
 
-        [TestMethod]
-        public void Test_ExcelDate()
-        {
-            //Arrange
+        //[TestMethod]
+        //public void Test_ExcelDate()
+        //{
+        //    //Arrange
 
-            string fileName = @"C:\Users\Per\Downloads\Fakturadetaljer_MittEurocard.xls";
-            string _outFile = @"C:\Temp\This.csv";
+        //    string fileName = @"C:\Users\Per\Downloads\Fakturadetaljer_MittEurocard.xls";
+        //    string _outFile = @"C:\Temp\This.csv";
 
-            // Act
+        //    // Act
 
-            DataTable _data = ExcelHelper.GetData(fileName);
+        //    DataTable _data = ExcelHelper.GetData(fileName,new DataTable());
             
-            _data.WriteToCsvFileAsync(_outFile);
+        //    _data.WriteToCsvFileAsync(_outFile);
 
-            //Assert
+        //    //Assert
 
-            Assert.IsTrue(File.Exists(_outFile));
-            //File.Delete(_outFile);
+        //    Assert.IsTrue(File.Exists(_outFile));
+        //    //File.Delete(_outFile);
 
-        }
+        //}
 
         [TestMethod]
         public void StringExtensionFormatTextReturnsString()
         {
             //Arrange
             string input = "$";
-
+            
             //Act
 
 
