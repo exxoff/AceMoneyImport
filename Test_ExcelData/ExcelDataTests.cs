@@ -36,22 +36,29 @@ namespace Test_ExcelData
         [Test]
         public void ConvertToCsvReturnsOK()
         {
-
-            DataTable table = new DataTable();
+            
+            
             var mockWriter = new Mock<ICsvFileWriter>();
+            var table = new DataTable();
+            IImportItem item = new ImportItem(table, mockWriter.Object);
+            item.InputFile = string.Empty;
+            item.OutputFile = string.Empty;
 
-            var Writer = mockWriter.Object;
+            ReturnObject ret = item.ConvertToCsv();
 
-            PrivateObject item = new PrivateObject(typeof(ImportItem), new object[] { table, Writer });
-            item.SetFieldOrProperty("InputFile", "Something");
-            item.SetFieldOrProperty("OutputFile", "Something");
-
-            ReturnObject ret = (ReturnObject)item.Invoke("ConvertToCsv");
-            Writer.WriteAsync(table, "hhh");
+            mockWriter.Object.WriteAsync(table, "hhh");
             mockWriter.Verify(x => x.WriteAsync(table, "hhh"), Times.Exactly(1));
             NUnit.Framework.Assert.AreEqual(0, ret.ErrorNumber);
             NUnit.Framework.Assert.AreEqual("", ret.ErrorMessage);
 
+
+
+        }
+
+        [Test]
+        public void ConvertToCsv_Returns_a_ReturnObject()
+        {
+            //Arrange
 
 
         }

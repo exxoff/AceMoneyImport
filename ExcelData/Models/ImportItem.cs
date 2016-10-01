@@ -34,22 +34,13 @@ namespace ExcelData.Models
 
         public DataTable ExcelTable { get; set; }
 
-        //public DataTable ExcelTable
-        //{
-        //    get { return ExcelTable; }
-        //    set { excelTable = value; }
-        //}
-
-
-
-        //private DataTable excelTable;
 
         public ImportItem()
         {
             
         }
 
-        private ImportItem(DataTable excelTable,ICsvFileWriter writer)
+        public ImportItem(DataTable excelTable,ICsvFileWriter writer)
         {
             this.Writer = writer;
             this.ExcelTable = excelTable;
@@ -161,33 +152,33 @@ namespace ExcelData.Models
             return sheet;
         }
 
-        private async void WriteToCsvFileAsync(DataTable excelTable)
-        {
-            StringBuilder fileContent = new StringBuilder();
+        //private async void WriteToCsvFileAsync(DataTable excelTable)
+        //{
+        //    StringBuilder fileContent = new StringBuilder();
 
-            foreach (var col in excelTable.Columns)
-            {
-                fileContent.Append("\"" + col.ToString() + "\";");
-            }
+        //    foreach (var col in excelTable.Columns)
+        //    {
+        //        fileContent.Append("\"" + col.ToString() + "\";");
+        //    }
 
-            fileContent.Replace(";", System.Environment.NewLine, fileContent.Length - 1, 1);
+        //    fileContent.Replace(";", System.Environment.NewLine, fileContent.Length - 1, 1);
 
 
 
-            foreach (DataRow dr in excelTable.Rows)
-            {
+        //    foreach (DataRow dr in excelTable.Rows)
+        //    {
 
-                foreach (var column in dr.ItemArray)
-                {
-                    fileContent.Append("\"" + column.ToString() + "\";");
-                }
+        //        foreach (var column in dr.ItemArray)
+        //        {
+        //            fileContent.Append("\"" + column.ToString() + "\";");
+        //        }
 
-                fileContent.Replace(";", System.Environment.NewLine, fileContent.Length - 1, 1);
-            }
+        //        fileContent.Replace(";", System.Environment.NewLine, fileContent.Length - 1, 1);
+        //    }
 
-            await Task.Run(() => System.IO.File.WriteAllText(OutputFile, fileContent.ToString(), Encoding.Unicode));
+        //    await Task.Run(() => System.IO.File.WriteAllText(OutputFile, fileContent.ToString(), Encoding.Unicode));
 
-        }
+        //}
 
     }
 }
