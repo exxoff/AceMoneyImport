@@ -12,7 +12,7 @@ namespace AceMoneyImport
     public partial class MainWindow
     {
 
-        //ImportItem Item;
+        //EuroCardImportItem Item;
         MainViewModel viewModel;
         
 
@@ -29,13 +29,17 @@ namespace AceMoneyImport
 
         private void FileBox_Drop(object sender, DragEventArgs e)
         {
-            TextBox _box = sender as TextBox;
+            
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] _files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                viewModel.InputFile = _files[0].ToString();
+                if (files != null)
+                {
+                    viewModel.InputFile = files[0];
+
+                }
             }
         }
 

@@ -1,132 +1,135 @@
-﻿
-using ExcelData.Helpers;
-using ExcelData.Interfaces;
-using GalaSoft.MvvmLight.Command;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using ExcelData.Interfaces;
+using ExcelData.Models;
+using GalaSoft.MvvmLight.Command;
 
 namespace AceMoneyImport.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public string WindowTitle { get; set; }
+        private string _inputFile;
 
-        private string inputFile;
+        private IImportItem _item;
+
+        private string _outFile;
+        private string _itemType;
+
+        public MainViewModel(IImportItem item)
+        {
+            this._item = item;
+            WindowTitle = $"AceMoney Import v.{GetVersion()}";
+            DoConvert = new RelayCommand(() => ConvertToCsv(), () => CreateCsvCanExecute());
+            SetItemType = new RelayCommand<string>((type) => DoSetItemType(type));
+
+            //InputFile = item.InputFile;
+            //OutFile = item.OutputFile;
+        }
+
+        public string WindowTitle { get; set; }
 
         public string InputFile
         {
-            get { return inputFile; }
+            get => _inputFile;
             set
             {
-                if (value != null)
-                {
-                    inputFile = value;
+                //if (value != null)
+                //{
+                    _inputFile = value;
 
                     if (OutFile == null)
                     {
-
-                        string _fileName = Path.GetFileNameWithoutExtension(inputFile);
-                        OutFile = string.Format("{0}\\{1}.csv", Path.GetDirectoryName(inputFile).ToString(), _fileName);
-                        
+                        var fileName = Path.GetFileNameWithoutExtension(_inputFile);
+                        OutFile = $"{Path.GetDirectoryName(_inputFile)}\\{fileName}.csv";
                     }
-                    item.InputFile = inputFile;
+
+                    _item.InputFile = _inputFile;
                     OnPropertyChanged();
                     DoConvert.RaiseCanExecuteChanged();
-                    
-                }
+                //}
             }
         }
 
-        private string outFile;
-        public string OutFile
+        public string ItemType
         {
-            get { return outFile; }
+            get => _itemType;
             set
             {
-                outFile = value;
-                item.OutputFile = outFile;
+                _itemType = value;
+                OnPropertyChanged();
+            }
+            
+        }
+
+        public string OutFile
+        {
+            get => _outFile;
+            set
+            {
+                _outFile = value;
+                _item.OutputFile = _outFile;
                 OnPropertyChanged();
                 DoConvert.RaiseCanExecuteChanged();
-
             }
         }
 
-        private IImportItem item;
-        public RelayCommand DoConvert { get; set; }
-        public MainViewModel(IImportItem item)
+        public RelayCommand<string> SetItemType { get; set; }
+
+        public RelayCommand DoConvert { get; }
+
+        public RelayCommand<DragEventArgs> DropCommand { get; set; }
+
+        private void DoSetItemType(string type)
         {
-            this.item = item;
-            WindowTitle = string.Format("AceMoney Import v.{0}", GetVersion());
-            DoConvert = new RelayCommand(() => ConvertToCsv(),() => CreateCsvCanExecute());
+            InputFile = null;
+            OutFile = null;
 
-            InputFile = item.InputFile;
-            OutFile = item.OutputFile;
-
+            _item = ImportItemFactory.GetImportItem(type);
         }
 
         public async void ConvertToCsv()
         {
             using (new WaitCursor())
             {
-
-
-                ReturnObject ret = await Task<ReturnObject>.Run(() => this.item.ConvertToCsv());
-                if (ret.ErrorNumber != 0)
-                {
-                    MessageBox.Show(ret.ErrorMessage);
-                }
-                
+                var ret = await Task.Run(() => _item.ConvertToCsv());
+                if (ret.ErrorNumber != 0) MessageBox.Show(ret.ErrorMessage,"AceMoneyImport",MessageBoxButton.OK,MessageBoxImage.Error);
             }
-            
+
+            InputFile = null;
+            OutFile = null;
         }
 
         public string GetVersion()
         {
-            var _version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
 
-            return string.Format("{0}.{1}.{2}", _version.Major, _version.Minor, _version.Build);
-
+            return string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
         }
 
 
         public bool CreateCsvCanExecute()
         {
-
-            return (isValidPath(InputFile) && isValidPath(OutFile));
+            return IsValidPath(InputFile) && IsValidPath(OutFile);
         }
 
-        private bool isValidPath(string FilePath)
+        private bool IsValidPath(string filePath)
         {
-
             try
             {
-                FileInfo _file = new FileInfo(FilePath);
+                var file = new FileInfo(filePath);
 
-                if (Directory.Exists(_file.Directory.ToString()))
-                {
-                    return true;
-                }
+                if (Directory.Exists(file.Directory.ToString())) return true;
                 return false;
             }
             catch (Exception)
             {
-
                 return false;
             }
-
-
-        }
-
-        private RelayCommand<DragEventArgs> dropCommand;
-
-        public RelayCommand<DragEventArgs> DropCommand
-        {
-            get { return dropCommand; }
-            set { dropCommand = value; }
         }
 
         private void FileBox_Drop(object sender, DragEventArgs e)
@@ -135,9 +138,9 @@ namespace AceMoneyImport.ViewModels
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] _files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
 
-                InputFile = _files[0].ToString();
+                InputFile = files[0];
             }
         }
 
@@ -148,17 +151,14 @@ namespace AceMoneyImport.ViewModels
 
 
         #region PropertyChanged members
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
-
-
     }
 }

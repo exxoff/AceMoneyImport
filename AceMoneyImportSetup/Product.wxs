@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="AceMoney Import" Language="1033" Version="1.0.0.0" Manufacturer="Per Rosen" UpgradeCode="aa66f9bb-0520-46ff-a8e1-40ce950af620">
+	<Product Id="*" Name="AceMoney Import" Language="1033" Version="3.0.0.0" Manufacturer="Per Rosen" UpgradeCode="aa66f9bb-0520-46ff-a8e1-40ce950af620">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />

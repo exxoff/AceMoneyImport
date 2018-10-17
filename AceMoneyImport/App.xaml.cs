@@ -19,14 +19,16 @@ namespace AceMoneyImport
         {
             base.OnStartup(e);
             ComposeObjects();
-            Application.Current.MainWindow.Show();
-
+            Current.MainWindow?.Show();
         }
 
         private void ComposeObjects()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            SimpleIoc.Default.Register<IImportItem, ImportItem>();
+            //SimpleIoc.Default.Register<IImportItem,ImportItemBase>();
+            SimpleIoc.Default.Register<IImportItem>(() => new EuroCardImportItem());
+            //SimpleIoc.Default.Register<IImportItem>(() => new SebImportItem());
+            
             SimpleIoc.Default.Register<ICsvFileWriter, CsvFileWriter>();
             
                        

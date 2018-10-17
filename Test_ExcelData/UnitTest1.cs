@@ -1,13 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ExcelData;
-using System.Data;
-using System.IO;
+﻿using ExcelData;
+using NUnit.Framework;
+
 
 namespace Test_ExcelData
 {
-    [TestClass]
-    public class UnitTest1
+    [TestFixture]
+    public class MiscTests  
     {
   
 
@@ -32,7 +30,7 @@ namespace Test_ExcelData
 
         //}
 
-        [TestMethod]
+        [Test]
         public void StringExtensionFormatTextReturnsString()
         {
             //Arrange
@@ -44,7 +42,7 @@ namespace Test_ExcelData
 
             //Assert
 
-            Assert.AreEqual("Å", ExcelData.StringExtensions.FormatText(input));
+            Assert.AreEqual("Å", StringExtensions.FormatText(input));
         }
     }
 }

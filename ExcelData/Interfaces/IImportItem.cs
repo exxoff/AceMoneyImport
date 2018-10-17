@@ -1,5 +1,6 @@
 ﻿using ExcelData.Helpers;
 using System.Data;
+using NPOI.SS.UserModel;
 
 namespace ExcelData.Interfaces
 {
@@ -10,6 +11,7 @@ namespace ExcelData.Interfaces
 
         ICsvFileWriter Writer { get; set; }
         DataTable ExcelTable { get; set; }
+        ISheet ExcelSheet { get; }
 
         ReturnObject ConvertToCsv();
 

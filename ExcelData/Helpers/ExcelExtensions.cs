@@ -1,35 +1,35 @@
 ﻿using NPOI.SS.UserModel;
-using System;
-using System.Data;
-using System.IO;
 
-namespace ExcelData
+namespace ExcelData.Helpers
 {
     public static class ExcelExtensions
     {
 
 
-        public static string GetValue(this ICell CurrentCell)
+        public static string GetValue(this ICell currentCell)
         {
-            string _retVal = string.Empty;
+            string retVal = string.Empty;
 
-            switch(CurrentCell.CellType)
+            switch(currentCell.CellType)
             {
                 case CellType.Numeric:
-                    {
-                        _retVal = CurrentCell.NumericCellValue.ToString();
+                {
+
+                    retVal =  DateUtil.IsCellDateFormatted(currentCell)
+                        ? currentCell.DateCellValue.ToString()
+                        : currentCell.NumericCellValue.ToString();
 
                         break;
                     }
                 case CellType.String:
                     {
-                        _retVal = CurrentCell.StringCellValue;
+                        retVal = currentCell.StringCellValue;
                         break;
                     }
                     
             }
 
-            return _retVal;
+            return retVal;
             
         }
     }
