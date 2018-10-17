@@ -39,5 +39,20 @@ namespace ExcelData.Models
             SpecificationColumn = 3;
             AmountColumn = 4;
         }
+
+        protected override Tuple<string, string> ConvertAmounts(string input)
+        {
+            Tuple<string, string> returnObject;
+            if (input.StartsWith("-"))
+            {
+                returnObject = Tuple.Create(input.Trim('-'), "");
+            }
+            else
+            {
+                returnObject = Tuple.Create("", input);
+            }
+
+            return returnObject;
+        }
     }
 }

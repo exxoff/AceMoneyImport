@@ -123,7 +123,11 @@ namespace AceMoneyImport.ViewModels
             {
                 var file = new FileInfo(filePath);
 
-                if (Directory.Exists(file.Directory.ToString())) return true;
+                if (file.Directory != null && Directory.Exists(file.Directory.ToString()))
+                {
+                    return true;
+                }
+
                 return false;
             }
             catch (Exception)

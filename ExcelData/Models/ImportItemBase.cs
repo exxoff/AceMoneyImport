@@ -133,16 +133,18 @@ namespace ExcelData.Models
                         var cellDate = dt;
 
                         string spec = excelSheet.GetRow(i).GetCell(SpecificationColumn).StringCellValue;
-                        string amount = excelSheet.GetRow(i).GetCell(AmountColumn).GetValue();
-                        string deposit = null;
+                        Tuple<string, string> amounts =
+                            ConvertAmounts(excelSheet.GetRow(i).GetCell(AmountColumn).GetValue());
+                        string amount = amounts.Item1;
+                        string deposit = amounts.Item2;
                         spec = spec.FormatText();
 
-                        if (amount.StartsWith("-"))
-                        {
-                            deposit = amount;
-                            amount = null;
-                            deposit = deposit.Trim('-');
-                        }
+                        //if (amount.StartsWith("-"))
+                        //{
+                        //    deposit = amount;
+                        //    amount = null;
+                        //    deposit = deposit.Trim('-');
+                        //}
 
                         excelTable.Rows.Add(null,
                             cellDate.ToString("yyyy/MM/dd", System.Globalization.CultureInfo.InvariantCulture),
@@ -167,6 +169,21 @@ namespace ExcelData.Models
 
             return excelTable;
 
+        }
+
+        protected virtual Tuple<string, string> ConvertAmounts(string input)
+        {
+            Tuple<string, string> returnObject;
+            if (input.StartsWith("-"))
+            {
+                returnObject = Tuple.Create("",input.Trim('-'));
+            }
+            else
+            {
+                returnObject = Tuple.Create(input,"");
+            }
+
+            return returnObject;
         }
     }
 }
